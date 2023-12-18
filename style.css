@@ -22,11 +22,12 @@ ul{
 }
 .nav ul{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 20px;
 }
 .nav ul li a{
     color: blue;
-    font-size: 20px;
+    font-size: 17px;
 }
 .nav ul li a:hover{
     border-bottom: 2px solid rgb(75, 71, 71);
