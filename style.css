@@ -48,6 +48,7 @@ ul{
     margin: auto;
     border-radius: 10px;
     position: relative;
+    text-wrap: wrap;
 }
 
 .Quotes{
