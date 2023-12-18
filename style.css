@@ -43,7 +43,7 @@ ul{
 .chuckNorissJokes,
 .currencyConverter,
 .Quotes{
-    max-width: 500px;
+    width: 300px;
     box-shadow: 0 0 10px black;
     margin: auto;
     border-radius: 10px;
