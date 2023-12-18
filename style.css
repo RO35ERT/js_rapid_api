@@ -1,0 +1,122 @@
+*,
+::before,
+::after {
+    box-sizing: border-box;
+    padding:0;
+    margin:0;
+}
+
+body{
+    background-color: papayawhip;
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+.nav{
+    padding: 30px;
+    box-shadow: 0 0 10px black;
+}
+ul{
+    list-style: none;
+}
+.nav ul{
+    display: flex;
+    justify-content: space-between;
+}
+.nav ul li a{
+    color: blue;
+    font-size: 20px;
+}
+.nav ul li a:hover{
+    border-bottom: 2px solid rgb(75, 71, 71);
+    padding-bottom: 2px;
+}
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    position: relative;
+}
+
+.chuckNorissJokes,
+.currencyConverter,
+.Quotes{
+    max-width: 500px;
+    box-shadow: 0 0 10px black;
+    margin: auto;
+    border-radius: 10px;
+    position: relative;
+}
+
+.Quotes{
+    position:absolute;
+    top: 110px;
+    visibility: hidden;
+}
+.currencyConverter{
+    position:absolute;
+    top: 110px;
+    visibility: hidden;
+}
+
+.currencyConverter div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.title{
+    padding: 20px;
+    text-align: center;
+    color: blue;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.contents,
+.quote{
+    padding: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+.author,
+.quote_author{
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 22px;
+}
+
+.generate,
+.generate_quote,
+.convert{
+    background-color: rgb(32, 32, 255);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 15px auto;
+}
+
+.btn{
+    text-align: center;
+}
+
+input{
+    outline: none;
+    margin: 10px 20px;
+    font-size: 18px;
+    padding: 2px;
+    text-indent: 2px;
+}
+
+.generate:hover,
+.generate_quote:hover,
+.convert:hover{
+    background-color: transparent;
+    border: 2px solid rgb(32, 32, 255);
+    color: rgb(32, 32, 255);
+}
+    

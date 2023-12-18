@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuck Jokes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <ul>
+                <li class="chuck_link"><a href="">Chuck Norris Jokes</a></li>
+                <li class="converter_link"><a href="">Currency Converter</a></li>
+                <li class="quotes_link"><a href="">Quotes</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="chuckNorissJokes">
+                <h2 class="title">Chuck Norris Jokes</h2>
+                <p class="contents"></p>
+                <p class="btn">
+                    <button class="generate">Generate New Joke</button>
+                </p>
+            </div>
+            <div class="Quotes">
+                <h2 class="title">Quotes</h2>
+                <p class="quote"></p>
+                <p class="quote_author"></p>
+                <p class="btn">
+                    <button class="generate_quote">Generate New Quote</button>
+                </p>
+            </div>
+            <div class="currencyConverter">
+                <h2 class="title">Currency Converter</h2>
+                <div class="">
+                    <label for="from">From</label>
+                    <input class="from" type="text" name="from" value="USD">
+                </div>
+                <div class="">
+                    <label for="to">To</label>
+                    <input class="to" type="text" name="to" value="ZMW">
+                </div>
+                <p style="text-align: center;" class="currency" ></p>
+                <p class="btn">
+                    <button class="convert">Convert</button>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
