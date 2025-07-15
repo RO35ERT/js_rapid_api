@@ -131,6 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         showLoader();
         try {
+
+            if(fromCurrency === toCurrency){
+                const resultHTML = `<p class="conversion-result">1 ${fromCurrency} = ${1} ${toCurrency}</p>`;
+                renderConverter(fromCurrency, toCurrency, resultHTML);
+            }
             const url = `https://currency-exchange.p.rapidapi.com/exchange?from=${fromCurrency}&to=${toCurrency}&q=1.0`;
             const options = { method: 'GET', headers: { 'X-RapidAPI-Key': API_KEY, 'X-RapidAPI-Host': CURRENCY_API_HOST } };
             const result = await fetchData(url, options);
