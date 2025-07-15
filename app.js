@@ -133,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
 
             if(fromCurrency === toCurrency){
+                hideLoader();
                 const resultHTML = `<p class="conversion-result">1 ${fromCurrency} = ${1} ${toCurrency}</p>`;
                 renderConverter(fromCurrency, toCurrency, resultHTML);
             }
