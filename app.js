@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const QUOTES_API_HOST = 'quotes15.p.rapidapi.com';
     const CURRENCY_API_HOST = 'currency-exchange.p.rapidapi.com';
 
+    // --- Data ---
+    const supportedCurrencies = [
+        'USD', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF', 'CNY', 'SEK', 'NZD',
+        'MXN', 'SGD', 'HKD', 'NOK', 'KRW', 'TRY', 'RUB', 'INR', 'BRL', 'ZAR', 'ZMW'
+    ];
+
     // --- State ---
     let currentPage = 'jokes';
 
@@ -54,36 +60,35 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('generate-quote-btn').addEventListener('click', fetchQuote);
     };
 
-    const renderConverter = (rate = null) => {
+    const renderConverter = (from = 'USD', to = 'ZMW', resultHTML = '') => {
+        const createOptions = (selectedValue) => supportedCurrencies
+            .map(code => `<option value="${code}" ${code === selectedValue ? 'selected' : ''}>${code}</option>`)
+            .join('');
+
         appContent.innerHTML = `
             <div class="converter-form">
                 <h2 class="content-title">Currency Converter</h2>
                 <div class="input-group">
-                    <label for="from">From</label>
-                    <input class="currency-input" id="from" type="text" value="USD">
+                    <label for="from-currency">From</label>
+                    <select class="currency-select" id="from-currency">${createOptions(from)}</select>
                 </div>
                 <div class="input-group">
-                    <label for="to">To</label>
-                    <input class="currency-input" id="to" type="text" value="ZMW">
+                    <label for="to-currency">To</label>
+                    <select class="currency-select" id="to-currency">${createOptions(to)}</select>
                 </div>
                 <button class="action-btn" id="convert-btn">Convert</button>
-                ${rate !== null ? `<p class="conversion-result">1 USD = ${rate} ZMW</p>` : ''}
+                ${resultHTML}
             </div>
         `;
-        document.getElementById('convert-btn').addEventListener('click', () => {
-             const from = document.getElementById('from').value;
-             const to = document.getElementById('to').value;
-             fetchConversion(from, to);
-        });
+        document.getElementById('convert-btn').addEventListener('click', handleConversion);
     };
     
-    // --- API Fetching Functions ---
+    // --- API & Event Handler Functions ---
     const fetchData = async (url, options) => {
         const response = await fetch(url, options);
         if (!response.ok) {
             throw new Error(`API request failed with status ${response.status}`);
         }
-        // Quotes API returns a number, others return JSON
         if (options.headers['X-RapidAPI-Host'] === CURRENCY_API_HOST) {
             return response.text();
         }
@@ -94,14 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showLoader();
         try {
             const url = 'https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random';
-            const options = {
-                method: 'GET',
-                headers: {
-                    accept: 'application/json',
-                    'X-RapidAPI-Key': API_KEY,
-                    'X-RapidAPI-Host': JOKES_API_HOST
-                }
-            };
+            const options = { method: 'GET', headers: { accept: 'application/json', 'X-RapidAPI-Key': API_KEY, 'X-RapidAPI-Host': JOKES_API_HOST } };
             const result = await fetchData(url, options);
             renderJoke(result.value);
         } catch (error) {
@@ -116,13 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showLoader();
         try {
             const url = 'https://quotes15.p.rapidapi.com/quotes/random/';
-            const options = {
-                method: 'GET',
-                headers: {
-                    'X-RapidAPI-Key': API_KEY,
-                    'X-RapidAPI-Host': QUOTES_API_HOST
-                }
-            };
+            const options = { method: 'GET', headers: { 'X-RapidAPI-Key': API_KEY, 'X-RapidAPI-Host': QUOTES_API_HOST } };
             const result = await fetchData(url, options);
             renderQuote(result.content, result.originator.name);
         } catch (error) {
@@ -133,25 +125,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const fetchConversion = async (from, to) => {
+    const handleConversion = async () => {
+        const fromCurrency = document.getElementById('from-currency').value;
+        const toCurrency = document.getElementById('to-currency').value;
+        
         showLoader();
         try {
-            const url = `https://currency-exchange.p.rapidapi.com/exchange?from=${from.toUpperCase()}&to=${to.toUpperCase()}&q=1.0`;
-            const options = {
-                method: 'GET',
-                headers: {
-                    'X-RapidAPI-Key': API_KEY,
-                    'X-RapidAPI-Host': CURRENCY_API_HOST
-                }
-            };
+            const url = `https://currency-exchange.p.rapidapi.com/exchange?from=${fromCurrency}&to=${toCurrency}&q=1.0`;
+            const options = { method: 'GET', headers: { 'X-RapidAPI-Key': API_KEY, 'X-RapidAPI-Host': CURRENCY_API_HOST } };
             const result = await fetchData(url, options);
-            // Convert result to a number and format it
             const rate = parseFloat(result).toFixed(2);
+
             if (isNaN(rate)) throw new Error("Invalid currency codes provided.");
 
-            renderConverter(); // Re-render the form
-            // Update the result in the newly rendered form
-            appContent.querySelector('.converter-form').innerHTML += `<p class="conversion-result">1 ${from.toUpperCase()} = ${rate} ${to.toUpperCase()}</p>`;
+            const resultHTML = `<p class="conversion-result">1 ${fromCurrency} = ${rate} ${toCurrency}</p>`;
+            renderConverter(fromCurrency, toCurrency, resultHTML);
 
         } catch (error) {
             renderError('Could not convert currency. Please check the currency codes.');
@@ -176,13 +164,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     break;
                 case 'converter':
                     showLoader();
-                    renderConverter();
+                    renderConverter(); // Render with default values
                     hideLoader();
                     break;
             }
             updateActiveNav(page);
             appContent.classList.remove('loading');
-        }, 200); // Wait for fade-out transition
+        }, 200);
     };
 
     nav.addEventListener('click', (e) => {

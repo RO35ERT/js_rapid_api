@@ -203,6 +203,26 @@ body {
     color: #e0e0e0;
 }
 
+/* Add these new rules to your style.css */
+
+.currency-select {
+    background-color: #333;
+    border: 2px solid #555;
+    color: #e0e0e0;
+    padding: 0.7rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    width: 100%; /* Make it fill the input-group */
+}
+
+.currency-select:focus {
+    border-color: #bb86fc;
+}
+
 .main-footer {
     margin-top: 2rem;
     color: #777;
